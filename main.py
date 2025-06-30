@@ -6,8 +6,7 @@ from flask_wtf.file import FileField, FileRequired, FileAllowed
 from wtforms.validators import URL, InputRequired
 import os
 import requests
-from io import BytesIO
-from colorthief import ColorThief
+from palette import get_palette
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -20,18 +19,13 @@ photo = UploadSet('photos', IMAGES)
 configure_uploads(app, photo)
 patch_request_class(app)
 
-
-def rgb2hex(r, g, b):
-    return "#{:02x}{:02x}{:02x}".format(r, g, b)
-
-
 class UrlForm(FlaskForm):
     image_url = URLField("Enter Image URL", validators=[InputRequired(), URL()], render_kw={"placeholder": "Photo URL"} )
     submit = SubmitField()
 
 class UploadForm(FlaskForm):
     image_file = FileField(validators=[FileRequired(), FileAllowed(photo, 'Images only!')])
-    submit = SubmitField('Upload')
+    submit = SubmitField('Submit')
 
 
 @app.route('/', methods=["GET"])
@@ -60,15 +54,8 @@ def upload_image():
 def image():
     image_url = request.args.get('image', None)
     response = requests.get(image_url)
-    color_thief = ColorThief(BytesIO(response.content))
-    palette = color_thief.get_palette(color_count=6)
-    palette_hex = []
-
-    for color in palette:
-        new_color = rgb2hex(r=color[0], g=color[1], b=color[2])
-        palette_hex.append(new_color)
-    return render_template("image.html", image=image_url, palette=palette_hex)
-
+    palette = get_palette(img=response)
+    return render_template("image.html", image=image_url, palette=palette)
 
 
 if __name__ == "__main__":
