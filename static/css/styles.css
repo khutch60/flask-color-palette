@@ -1,0 +1,19 @@
+.column {
+  float: left;
+  height: 900px;
+}
+
+.left {
+  width: 40%;
+}
+
+.right {
+  width: 60%;
+  text-align: right;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}

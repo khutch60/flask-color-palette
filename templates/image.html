@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Color Palette Generator</title>
+    <link rel="stylesheet" href="static/css/styles.css">
+</head>
+<body>
+    <div class="row">
+        <div class="column left">
+            <img src='{{ image }}' style="width:100%; height:100%; object-fit: contain; margin-top:5%; margin-left:5%">
+        </div>
+        <div class="column right">
+            {% for color in palette %}
+                <div>
+                    <p style="font-size:25px">{{ color }}</p>
+                    <div style="background-color:{{ color }}; height:75px; margin-left: 150px">
+                        <p style="color:{{ color }}">s</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Color Palette Generator</title>
+    <link rel="stylesheet" href="static/css/styles.css">
+</head>
+<body>
+    <div style="position: absolute; top: 50%; left: 50%; margin-top: -50px; margin-left: -50px; width: 100px; height: 100px;">
+        <form method="POST" action="{{ url_for('url') }}">
+            {{ url.csrf_token }}
+            <div style="padding:10px;">
+                <p>Enter Photo URL {{ url.image_url }} {{ url.submit }}</p>
+            </div>
+
+        </form>
+
+        <form method="POST" action="{{ url_for('upload_image') }}" enctype="multipart/form-data">
+            {{ upload.csrf_token }}
+
+            <div style="padding:10px;">
+
+                <p>Upload Image {{ upload.image_file }} {{ upload.submit }}</p>
+            </div>
+            <div style="padding:10px;">
+
+            </div>
+
+        </form>
+    </div>
+</body>
+</html>
